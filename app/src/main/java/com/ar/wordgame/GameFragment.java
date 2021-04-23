@@ -13,6 +13,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -52,6 +53,23 @@ public class GameFragment extends Fragment {
             public void onClick(View v) {
                 guessActionContainer.setVisibility(View.GONE);
                 guessCharacterAdapter.clear();
+            }
+        });
+
+        btnAccept.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String word = guessCharacterAdapter.getWord();
+                for (int i = 0; i < level.getWords().size(); i++) {
+                    if (word.equalsIgnoreCase(level.getWords().get(i))) {
+                        Toast.makeText(getContext(), "حدست درسته : " + word, Toast.LENGTH_SHORT).show();
+                        wordsAdapter.makeWordVisible(word);
+                        btnCancel.performClick();
+                        return;
+                    }
+                }
+                btnCancel.performClick();
+                Toast.makeText(getContext(), "صحیح نیست", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -99,8 +117,9 @@ public class GameFragment extends Fragment {
                 CharacterPlaceHolder characterPlaceHolder = new CharacterPlaceHolder();
                 if (j < level.getWords().get(i).length()) {
                     characterPlaceHolder.setCharacter(level.getWords().get(i).charAt(j));
-                    characterPlaceHolder.setVisible(true);
+                    characterPlaceHolder.setVisible(false);
                     characterPlaceHolder.setNull(false);
+                    characterPlaceHolder.setTag(level.getWords().get(i));
                 } else characterPlaceHolder.setNull(true);
 
 

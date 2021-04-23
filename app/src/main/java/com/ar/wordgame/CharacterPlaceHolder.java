@@ -5,6 +5,15 @@ public class CharacterPlaceHolder {
     private Character character;
     private boolean isVisible;
     private boolean isNull;
+    private String tag;
+
+    public String getTag() {
+        return tag;
+    }
+
+    public void setTag(String tag) {
+        this.tag = tag;
+    }
 
     public boolean isNull() {
         return isNull;
